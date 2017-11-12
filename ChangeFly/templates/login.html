@@ -1,13 +1,42 @@
 <!DOCTYPE html>
-{% extends 'base.html' %}
+<html>
+   <body>
 
-{% block title %}Login{% endblock %}
+        <h2>SIGN IN PAGE</h2>
 
-{% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-{% endblock %}
+      <form name = "form" action = "{% url "login" %}"
+         method = "POST" >{% csrf_token %}
+
+         <div style = "max-width:470px;">
+               <input type = "text" style = "margin-left:20%;"
+                  placeholder = "Username" name = "username" />
+         </div>
+
+         <br>
+
+         <div style = "max-width:470px;">
+               <input type = "text" style = "margin-left:20%;"
+                  placeholder = "password" name = "password" />
+         </div>
+
+         <br>
+
+         <div style = "max-width:470px;">
+
+               <button style = "border:0px; background-color:#4285F4; margin-top:8%;
+                  height:35px; width:80%;margin-left:19%;" type = "submit"
+                  value = "Login" >
+                  <strong>Login</strong>
+               </button>
+
+         </div>
+
+      </form>
+            <form action="{% url 'Signup' %}">
+        <input type="submit" value="SignUp" />
+    </form>
+
+
+
+   </body>
+</html>

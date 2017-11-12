@@ -29,7 +29,7 @@ class Users(models.Model):
     password=models.CharField(max_length=200)
 
     def __str__(self):
-        return  str(self.username) + self.EmailAddress + self.password
+        return  str(self.username)+str(self.password)
 
 """
 def ProductSelection(request, template_name='product_selection.html'):

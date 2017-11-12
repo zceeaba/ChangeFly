@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login
 
 urlpatterns = [
-    url(r'^login/$', login, name='login'),
+    #url(r'^login/$', login, name='login'),
     url(r'^ChangeFly/', include('ChangeFly.urls')),
     url(r'^admin/', admin.site.urls),
 ]
