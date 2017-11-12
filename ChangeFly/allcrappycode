@@ -1,0 +1,19 @@
+def get_user(request):
+    # if this is a POST request we need to process the form data
+    if request.method=="POST":
+        form = NewUserForm(request.POST)
+        # check whether it's valid:
+        #if form.is_valid():
+        user=form.save()
+        """
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        email = form.cleaned_data['email ']
+        """
+        print form.cleaned_data['username']+form.cleaned_data['password']+form.cleaned_data['EmailAddress']
+        user = Users(username=form.cleaned_data['username'], password=form.cleaned_data['password'],EmailAddress=form.cleaned_data['EmailAddress'])
+    else:
+        form=NewUserForm()
+        context={'form':form}
+        return HttpResponseRedirect(Signin(request))
+    #return render(request, Signup(request), args)
