@@ -3,28 +3,29 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block content %}
+    <h1>Transaction List</h1>
+
+    {% if object_list %}
+    <ul>
     <table style="width:100%">
-  <tr>
-    <th>Accountnumber</th>
-    <th>Sortcode</th>
-    <th>PaymentAmount</th>
-  </tr>
-  <tr>
-    <td>Jill</td>
-    <td>Smith</td>
-    <td>50</td>
-  </tr>
-  <tr>
-    <td>Eve</td>
-    <td>Jackson</td>
-    <td>94</td>
-  </tr>
-</table>
-</body>
-</html>
+        <th>amount</th>
+        <th>rounded_amount</th>
+        <th>donation</th>
+        <th>date</th>
+        <th>transactionid</th>
+      {% for transaction in object_list %}
+              <tr>
+                <td>{{transaction.amount }}</td>
+                <td>{{transaction.rounded_amount}}</td>
+                <td>{{transaction.donation}}</td>
+                <td>{{transaction.date}}</td>
+                <td>{{transaction.transactionid}}</td>
+              </tr>
+      {% endfor %}
+    </table>
+    </ul>
+    {% else %}
+      <p>There are no Donations been made</p>
+    {% endif %}
+{% endblock %}

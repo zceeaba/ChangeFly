@@ -1,7 +1,17 @@
 import pickle
-from ChangeFly.models import customer_info
+
 dictionary = pickle.load( open( "save.p", "rb" ) )
 
-for x in dictionary:
-    cs=customer_info(amount=dictionary['amount'],rounded_amount=['rounded_amount'],
-                     date=dictionary['date'],donation=dictionary['donation'],transactionid=dictionary['id'])
+
+import json
+with open('result.json', 'w') as fp:
+    json.dump(dictionary, fp)
+"""
+import pickle
+
+dictionary = pickle.load(open("save.p", "rb"))
+
+for i in dict_list:
+    cs = customer_info(amount=i['amount'], rounded_amount=i['rounded_amount'], donation=i['donation'],
+                       date=i['date'], transactionid=i['id'])
+"""

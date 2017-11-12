@@ -31,6 +31,15 @@ class Users(models.Model):
     def __str__(self):
         return  str(self.username)+str(self.password)
 
+class customer_info(models.Model):
+    amount = models.FloatField(max_length=150)
+    rounded_amount = models.IntegerField(max_length=150)
+    donation = models.FloatField(max_length=150)
+    date = models.CharField(max_length=150)
+    transactionid= models.IntegerField(max_length=150)
+
+
+
 """
 def ProductSelection(request, template_name='product_selection.html'):
     if user.is_authenticated():
