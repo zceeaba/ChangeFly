@@ -17,6 +17,8 @@ from ChangeFly.forms import LoginForm,ImportExcelForm
 from django.views.generic import RedirectView
 from django.core.urlresolvers import reverse_lazy
 
+from django.template import Template,Context
+
 
 
 def login(request):
@@ -63,6 +65,7 @@ def Signup(request):
 from .models import customer_info
 from django.views import generic
 # Create your views here.
+
 class transactionView(generic.ListView):
     model = customer_info
     context_object_name = 'object_list'  # your own name for the list as a template variable
@@ -71,10 +74,70 @@ class transactionView(generic.ListView):
     def get_queryset(self):
         return customer_info.objects.all()
 
+from django.db import connection
+import sqlite3
+import sys
 
-def customer_list(request):
+def _my_custom_sqlitedatabase():
+    try:
+        con = sqlite3.connect('C:/Users/baans/PycharmProjects/ChangeFly/customer_info.db')
+
+        cursor = con.cursor()
+
+        cursor.execute('SELECT * FROM roundups')
+
+        data = cursor.fetchall()
+
+        for record in data:
+            print record
+
+        return data
+    except sqlite3.Error as e:
+
+        if con:
+            con.rollback()
+
+        print("Error %s:" % e.args[0])
+        sys.exit(1)
+
+    finally:
+        if con:
+            con.close()
+
+
+from django.http import HttpResponse
+from django.template import loader
+
+"""
+def rendertemplate(request,record):
+    template = loader.get_template('customerlist.html')
+    context = {"record":{"Company name": record[0], "Amount": record[1], "Rounded up": record[2], "Donation": record[3],
+         "randomdata": record[4], "Date": record[5],
+         "ID": record[6]}}
+    return render(request, template, context)
+
+    
     table = customer_infoTable(customer_info.objects.all())
 
     return render(request, 'customerlist.html', {
         'table': table
     })
+    """
+"""
+def customer_list(request):
+    data = _my_custom_sqlitedatabase()
+    for record in data:
+        rendertemplate(request,record)
+"""
+"""
+from django.core.mail import send_mail
+from django.http import HttpResponse
+
+def sendSimpleEmail(request,emailto):
+   res = send_mail("hello Jay", "comment tu vas?", "zceeaba@ucl.ac.uk", ["abhishekhb@yahoo.co.uk"])
+   return HttpResponse('%s'%res)
+
+from django.http import HttpResponse
+from django.template import loader
+"""
+

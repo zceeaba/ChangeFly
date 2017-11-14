@@ -9,6 +9,7 @@
     {% if object_list %}
     <ul>
     <table style="width:100%">
+        <th>Store name</th>
         <th>amount</th>
         <th>rounded_amount</th>
         <th>donation</th>
@@ -16,6 +17,7 @@
         <th>transactionid</th>
       {% for transaction in object_list %}
               <tr>
+                <td>{{transaction.storename }}</td>
                 <td>{{transaction.amount }}</td>
                 <td>{{transaction.rounded_amount}}</td>
                 <td>{{transaction.donation}}</td>

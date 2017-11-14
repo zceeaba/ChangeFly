@@ -15,4 +15,8 @@ urlpatterns = [
     url(r'^login/transactions/', views.trans, name='logintransaction'),
     url(r'^login/', views.login, name='login'),
     url(r'^connection/',TemplateView.as_view(template_name = 'login.html')),
+    url(r'^customerlist/', TemplateView.as_view(template_name='customerlist.html')),
+    #url(r'^simpleemail/(?P<emailto>[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/', views.sendSimpleEmail , name = 'sendSimpleEmail'),
 ]
+
+

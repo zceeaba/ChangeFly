@@ -31,36 +31,71 @@ class Users(models.Model):
     def __str__(self):
         return  str(self.username)+str(self.password)
 
+from django.db import connection
+import sqlite3
+import sys
+
+
 class customer_info(models.Model):
+    storename=models.CharField(max_length=150)
     amount = models.FloatField(max_length=150)
-    rounded_amount = models.IntegerField(max_length=150)
+    rounded_amount = models.IntegerField()
     donation = models.FloatField(max_length=150)
     date = models.CharField(max_length=150)
-    transactionid= models.IntegerField(max_length=150)
+    transactionid= models.IntegerField()
 
+def _my_custom_sqlitedatabase():
+    try:
+        con = sqlite3.connect('C:/Users/baans/PycharmProjects/ChangeFly/customer_info.db')
+
+        cursor = con.cursor()
+
+        cursor.execute('SELECT * FROM roundups')
+
+        data = cursor.fetchall()
+
+        for record in data:
+            cs=customer_info(storename=(record[0]),amount=float(record[1]),rounded_amount=int(record[2]),donation=float(record[3]),date=record[4],transactionid=int(record[5]))
+            cs.save()
+
+        return data
+    except sqlite3.Error as e:
+
+        if con:
+            con.rollback()
+
+        print("Error %s:" % e.args[0])
+        sys.exit(1)
+
+    finally:
+        if con:
+            con.close()
+
+_my_custom_sqlitedatabase()
 
 
 """
-def ProductSelection(request, template_name='product_selection.html'):
-    if user.is_authenticated():
-        user = request.user
-    else:
-    # deal with anonymous user info
-    user = Users.objects.create(
-        user=form.cleaned_data["username"],
-        product=form.cleaned_data["product"],
-        quantity=form.cleaned_data["product_quantity"],
-    )
+class Blog(models.Model):
+    title = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True)
+    body = models.TextField()
+    posted = models.DateTimeField(db_index=True, auto_now_add=True)
+    category = models.ForeignKey('Blog.Category')
 
-"""
-"""
-def getusername(self,username):
-    self.username=username
-def getname(self,name):
-    self.name=name
-def getemailid(self,emailid):
-    self.EmailAddress=emailid
-def getpassword(self,password):
-    self.password=password
-"""
+    def __unicode__(self):
+        return '%s' % self.title
 
+    def get_absolute_url(self):
+        return ('view_blog_post', None, { 'slug': self.slug })
+"""
+"""
+class Category(models.Model):
+    title = models.CharField(max_length=100, db_index=True)
+    slug = models.SlugField(max_length=100, db_index=True)
+
+    def __unicode__(self):
+        return '%s' % self.title
+
+    def get_absolute_url(self):
+        return ('view_blog_category', None, { 'slug': self.slug })
+"""
